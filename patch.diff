@@ -1,0 +1,31 @@
+diff --git a/kalandozas_a_terkepen.ipynb b/kalandozas_a_terkepen.ipynb
+index 2f97d45..5e14e9c 100644
+--- a/kalandozas_a_terkepen.ipynb
++++ b/kalandozas_a_terkepen.ipynb
+@@ -195,7 +195,7 @@
+     "CONST_DISTANCE_API_KEY = CONST_GEOCODE_API_KEY\n",
+     "\n",
+     "# pontosító jellegű kiegészítések\n",
+-    "CONST_ORSZAG = \"Hungary\" # minden adatpont ebben az országban van\n",
++    "CONST_ORSZAG = \"Magyarország\" # minden adatpont ebben az országban van\n",
+     "CONST_REGIO = \"hu\" # pontosító régió; még véletlenül sem az USA-ban található Budapest településre vagyunk kíváncsiak, hanem az itthonira :)\n",
+     "\n",
+     "# várakozási idők két lekérdezés között (másodpercben)\n",
+@@ -392,7 +392,7 @@
+     "def geocode_query(webcim, varakozas=CONST_SLEEP_ERROR_KEZDETI, max_varakozas=CONST_SLEEP_ERROR_MAXIMUM):\n",
+     "    \"\"\"A Google Maps Geocoding API felé indított lekérdezések végrehajtása. Az eredmény Python dictionary (kulcs-érték szótár) típusú.\"\"\"\n",
+     "    rj = requests.get(webcim).json() # lekérdezést indítunk, és az eredményt JSON formátummá alakítjuk\n",
+-    "    if rj.get(\"status\") == \"OK\" and len(rj.get(\"results\", dict())) > 0: # a Google Maps Geocoding API mondjuk elvileg akkor is visszaad egy üres \"results\" tömböt, ha nincs találat, de azért így a biztos...\n",
++    "    if rj.get(\"status\") == \"OK\" and len(rj.get(\"results\", [])) > 0: # a Google Maps Geocoding API mondjuk elvileg akkor is visszaad egy üres \"results\" tömböt, ha nincs találat, de azért így a biztos...\n",
+     "        # Itt persze lenne tér némi barkácsolásra, például hogy ne fixen a Google által fölkínált\n",
+     "        # legelső lehetőséget használjuk (Pythonban: 0 indexű találat, rj[\"results\"][0]),\n",
+     "        # hanem egy másikat, esetleg többet is. Hiányos, zavaros, irányítószám nélküli címeknél\n",
+@@ -439,7 +439,7 @@
+     "    \n",
+     "    i = 0\n",
+     "    while i < len(p):\n",
+-    "        lnk = \"https://maps.googleapis.com/maps/api/geocode/json?address={cim}+{varos}+{irsz}+{orszag}&region={region}&key={api_key}\".format( \\\n",
++    "        lnk = \"https://maps.googleapis.com/maps/api/geocode/json?address={varos}+{cim}+{irsz}+{orszag}&region={region}&key={api_key}\".format( \\\n",
+     "            cim = p.iloc[i, cim_oszlopok[2]].replace(\" \", \"+\").strip(), \\\n",
+     "            varos = p.iloc[i, cim_oszlopok[1]].replace(\" \", \"+\").strip(), \\\n",
+     "            irsz = str(p.iloc[i, cim_oszlopok[0]]), \\\n",
